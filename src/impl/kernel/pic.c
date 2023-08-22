@@ -1,13 +1,16 @@
 #include "pic.h"
+#include "io.h"
 
-// Función para escribir un byte en un puerto de E/S
-void outb(uint16_t port, uint8_t data) {
-    asm volatile (
-        "outb %0, %1"
-        :
-        : "a" (data), "Nd" (port)
-    );
+// Función para habilitar las interrupciones
+void enable_interrupts() {
+    asm("sti"); // Set Interrupt flag
 }
+
+// Función para limpiar la interrupción en el controlador de interrupciones (PIC)
+void clean_interrupts() {
+    outb(0x20, 0x20);
+}
+
 
 // Inicializar el controlador de interrupciones PIC
 void init_pic() {
@@ -32,3 +35,21 @@ void init_pic() {
     outb(PIC2_DATA, 0x00);
 }
 
+
+int get_cpus()
+{
+unsigned int num_cpus;
+
+    // Código para obtener el número de CPUs
+    asm (
+        "mov $11, %%eax\n\t"  // Código de función 11 (Obtener información del sistema)
+        "mov $0, %%ecx\n\t"   // Subfunción 0 (Obtener número de CPUs)
+        "int $0x15\n\t"       // Llamar a la interrupción 0x15
+        "mov %%ebx, %0\n\t"   // Almacenar el resultado en num_cpus
+        : "=r" (num_cpus)     // Salida
+        :                    // Entradas
+        : "eax", "ebx", "ecx" // Registros que se modifican
+    );
+
+    return num_cpus;
+}

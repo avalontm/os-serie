@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "pic.h": "c"
+        "pic.h": "c",
+        "stdint.h": "c",
+        "pit.h": "c",
+        "print.h": "c",
+        "stddef.h": "c",
+        "io.h": "c"
     }
 }
