@@ -5,6 +5,11 @@
         "pit.h": "c",
         "print.h": "c",
         "stddef.h": "c",
-        "io.h": "c"
+        "io.h": "c",
+        "acpi.h": "c",
+        "console.h": "c",
+        "string.h": "c",
+        "format.h": "c",
+        "lowmem.h": "c"
     }
 }

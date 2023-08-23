@@ -1,16 +1,24 @@
-ENTRY(start)
-
+OUTPUT_FORMAT("binary")
+ENTRY(kmain)
 SECTIONS
 {
-	. = 1M;
+    g_localApicAddr = 0x00006000;
+    g_activeCpuCount = 0x00006008;
 
-	.boot :
-	{
-		KEEP(*(.multiboot_header))
-	}
+    .text 0x0000000000100000:
+    {
+        *(.text)
+    }
 
-	.text :
-	{
-		*(.text)
-	}
+    .data :
+    {
+        *(.data)
+    }
+
+    .bss :
+    {
+        __bss_start = .;
+        *(.bss)
+        __bss_end = .;
+    }
 }
