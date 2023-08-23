@@ -6,13 +6,13 @@
 #include "mem/lowmem.h"
 
 // ------------------------------------------------------------------------------------------------
-typedef struct IdtDesc
+typedef struct
 {
-    u16 limit;
-    u64 base;
-} PACKED IdtDesc;
+    uint16_t limit;
+    uint64_t base;
+} IdtDesc;
 
-typedef struct IdtEntry
+typedef struct 
 {
     u16 offset0;
     u16 selector;
@@ -20,7 +20,7 @@ typedef struct IdtEntry
     u16 offset1;
     u32 offset2;
     u32 reserved;
-} PACKED IdtEntry;
+} IdtEntry;
 
 typedef void (*Handler)();
 
@@ -52,7 +52,7 @@ void IdtInit()
         .limit = 256 * sizeof(IdtEntry) - 1,
         .base = IDT_BASE
     };
-    __asm__ volatile("lidt %0" : : "m" (idtDesc) : "memory");
+    asm volatile("lidt %0" : : "m" (idtDesc) : "memory");
 
     // Test interrupt
     // __asm__ volatile("int $3");

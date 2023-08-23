@@ -1,10 +1,11 @@
 ; -------------------------------------------------------------------------------------------------
-; src/asm/boot/boot.asm
+; src/boot/boot.asm
 ; -------------------------------------------------------------------------------------------------
 
+[ORG 0x7c00]
 [BITS 16]
 
-%include "src/asm/boot/defines.asm"
+%include "src/boot/defines.asm"
 
 ; -------------------------------------------------------------------------------------------------
 ; Entrypoint for boot loader
@@ -226,4 +227,5 @@ filename db 'LOADER  BIN'
 ; -------------------------------------------------------------------------------------------------
 ; Footer
 times 510-($-$$) db 0    ; Fill boot sector
-dw 0xAA55                ; Boot loader signature
+db 0x55                  ; Boot loader signature
+db 0xAA               
